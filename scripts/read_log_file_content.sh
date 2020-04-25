@@ -22,4 +22,4 @@ else
 fi
 #sleep 1
 done
-#justcom
+#justcomf
