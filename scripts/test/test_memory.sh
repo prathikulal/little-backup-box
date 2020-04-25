@@ -55,7 +55,7 @@ sudo shutdown -c
 if [ $DISP = true ]; then
     oled r
     oled +b "Storage OK"
-    oled +c "Card reader..."
+    oled +c "Insert Card reader..."
     sudo oled s
 fi
 
@@ -108,6 +108,9 @@ if [ $DISP = true ]; then
 #    sudo oled s
 #### my code end
 fi
+
+echo "storage remaining  size is $STORAGE_AV_SIZE"
+echo "card size is $CARD_DATA_SIZE"
 
 #my code start
 if [$STORAGE_AV_SIZE -lt $CARD_DATA_SIZE]
