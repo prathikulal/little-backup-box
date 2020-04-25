@@ -26,7 +26,7 @@ source "$CONFIG"
 sudo sh -c "echo heartbeat > /sys/class/leds/led0/trigger"
 
 # Shutdown after a specified period of time (in minutes) if no device is connected.
-#sudo shutdown -h $SHUTD "Shutdown is activated. To cancel: sudo shutdown -c"
+sudo shutdown -h $SHUTD "Shutdown is activated. To cancel: sudo shutdown -c"
 if [ $DISP = true ]; then
     oled r
     oled +b "Shutdown active"
@@ -123,8 +123,9 @@ if [ $STORAGE_AV_SIZE -lt $CARD_DATA_SIZE ]
   sudo oled s
   sync
   oled r
+  shutdown -h now
   exit
-  #shutdown -h now
+
 fi
   echo "Storage available"
   oled r
@@ -160,19 +161,22 @@ if [ "$?" -eq "0" ]
 then
   echo "rsync was success"
   $(cat /dev/null> /home/pi/rsync_dirnFiles.log)
-  sleep 1
+  sleep 1 # added as margin for file read log file script
 
 else
   $(cat /dev/null> /home/pi/rsync_dirnFiles.log)
-  sleep 1
+  sleep 2 # added as margin for file read log file script
   echo "Error while running rsync"
   oled r
   oled +b "Error while copy"
   oled +c "Shutdown"
   sudo oled s
   #clear log file of display
-
-  #shutdown -h now
+  sync
+  if [ $DISP = true ]; then
+      oled r
+  fi
+  shutdown -h now
   exit
 fi
 
@@ -189,4 +193,4 @@ sync
 if [ $DISP = true ]; then
     oled r
 fi
-#shutdown -h now
+shutdown -h now
