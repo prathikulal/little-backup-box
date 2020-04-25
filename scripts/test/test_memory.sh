@@ -113,9 +113,7 @@ echo "storage remaining  size is $STORAGE_AV_SIZE"
 echo "card size is $CARD_DATA_SIZE"
 
 #my code start
-if [$STORAGE_AV_SIZE -lt $CARD_DATA_SIZE]
- then
-#if [$STORAGE_AV_SIZE le $CARD_DATA_SIZE]; then
+if [ $STORAGE_AV_SIZE -lt $CARD_DATA_SIZE ]; then
   echo "Not enough storage available"
   oled r
   oled +b "Not enough"
