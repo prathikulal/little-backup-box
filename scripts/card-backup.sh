@@ -90,7 +90,7 @@ if [ $DISP = true ]; then
     oled +b "Card reader OK"
     #oled +c "Working..."
     sudo oled s
-#my code
+#my code start
     sleep 3
     oled r
     oled +b "Storage size"
@@ -100,14 +100,41 @@ if [ $DISP = true ]; then
     sleep 3
     oled r
     oled +b "Card data size:"
-    oled +c "$CARD_DATA_SIZE_HR"
+    oled +d "$CARD_DATA_SIZE_HR"
     sudo oled s
     sleep 3
-    oled r
-    oled +a "Copying"
-    sudo oled s
-#### my code
+    #oled r
+#    oled +a "Copying..."
+#    sudo oled s
+#### my code end
 fi
+
+#my code start
+if [$STORAGE_AV_SIZE le $CARD_DATA_SIZE]; then
+  echo "Not enough storage available"
+  oled r
+  oled +b "Not enough"
+  oled +c "storage available"
+  oled +d "Shutdown..."
+  sudo oled s
+  sync
+  oled r
+  exit
+  #shutdown -h now
+fi
+  echo "Storage available"
+  oled r
+  oled +b "Storage available"
+  sudo oled s
+  sleep 3
+  oled r
+  oled +a "Copying..."
+  sourceDnF=$(tree -a "$CARD_MOUNT_POINT"| tail -1|awk '{ print "D:"$1"\tF:"$3}')
+  message="DR:$NoOfDir FL:$NoOfFiles"
+  oled +b "$message"
+  sudo oled s
+
+#my code ends
 
 # Create  a .id random identifier file if doesn't exist
 cd "$CARD_MOUNT_POINT"
@@ -122,7 +149,7 @@ cd
 # Set the backup path
 BACKUP_PATH="$STORAGE_MOUNT_POINT"/"$ID"
 # Perform backup using rsync
-rsync -avh --info=progress2 --exclude "*.id" "$CARD_MOUNT_POINT"/ "$BACKUP_PATH"
+rsync -avh --info=progress2 --log-file=/tmp/rsync_dirnFiles.log --exclude "*.id" "$CARD_MOUNT_POINT"/ "$BACKUP_PATH"
 if [ "$?" -eq "0" ]
 then
   echo "rsync was success"
