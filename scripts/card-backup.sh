@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #######################################################################
 
-CONFIG_DIR=$(dirname "")
+CONFIG_DIR=$(dirname "$0")
 CONFIG="${CONFIG_DIR}/config.cfg"
 source "$CONFIG"
 
@@ -74,6 +74,16 @@ mount /dev"/${CARD_READER[0]}" "$CARD_MOUNT_POINT"
 # Set the ACT LED to blink at 500ms to indicate that the card has been mounted
 sudo sh -c "echo 500 > /sys/class/leds/led0/delay_on"
 
+
+####my code
+#STORAGE_AV_SIZE_HR=$(df -kh |grep "$STORAGE_MOUNT_POINT"|awk '{print $4}') #Available storage size in human readable format
+#STORAGE_AV_SIZE=$(df -kh |grep "$STORAGE_MOUNT_POINT"|awk '{print $4}') #Available storage size in human readable format
+#CARD_DATA_SIZE_HR=$(df -kh |grep "$CARD_MOUNT_POINT"|awk '{print $3}') # Size of data present in card in human readable format
+#CARD_DATA_SIZE=$(df -kh |grep "$CARD_MOUNT_POINT"|awk '{print $3}') # Size of data present in card in human readable format
+#sleep 5
+#####
+
+
 # If display support is enabled, notify that the card has been mounted
 if [ $DISP = true ]; then
     oled r
@@ -96,7 +106,6 @@ cd
 BACKUP_PATH="$STORAGE_MOUNT_POINT"/"$ID"
 # Perform backup using rsync
 rsync -avh --info=progress2 --exclude "*.id" "$CARD_MOUNT_POINT"/ "$BACKUP_PATH"
-
 if [ "$?" -eq "0" ]
 then
   echo "rsync was success"
@@ -106,10 +115,12 @@ else
   oled +b "Error while copy"
   oled +c "Shutdown"
   sudo oled s
+  #shutdown -h now
   exit
 fi
 
 # If display support is enabled, notify that the backup is complete
+
 if [ $DISP = true ]; then
     oled r
     oled +b "Backup complete"
@@ -122,6 +133,3 @@ if [ $DISP = true ]; then
     oled r
 fi
 #shutdown -h now
-#added this too
-#added this from web interface
-# added this from atoms
