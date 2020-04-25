@@ -111,3 +111,4 @@ if [ $DISP = true ]; then
 fi
 #shutdown -h now
 #added this too
+#added this from web interface
