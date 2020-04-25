@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #######################################################################
 
-CONFIG_DIR=$(dirname "$0")
+CONFIG_DIR=$(dirname "")
 CONFIG="${CONFIG_DIR}/config.cfg"
 source "$CONFIG"
 
@@ -109,4 +109,4 @@ sync
 if [ $DISP = true ]; then
     oled r
 fi
-shutdown -h now
+#shutdown -h now
