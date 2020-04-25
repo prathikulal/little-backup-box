@@ -30,3 +30,4 @@ echo "$ip"
 oled r
 oled +a "$a"
 sudo oled s
+#edit
