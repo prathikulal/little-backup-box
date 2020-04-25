@@ -4,6 +4,15 @@
 CONFIG="/home/pi/little-backup-box/scripts/config.cfg"
 source "$CONFIG"
 ######################################################################
+
+
+if [ -s /home/pi/rsync_dirnFiles.log ]
+then
+        echo "File is empty"
+else
+        echo "File is not empty"
+fi
+
 NoOfDir=$(grep -c "cd+++++++++" /home/pi/rsync_dirnFiles.log)
 NoOfFiles=$(grep -c "f+++++++++" /home/pi/rsync_dirnFiles.log)
 oled r
