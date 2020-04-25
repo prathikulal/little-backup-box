@@ -13,12 +13,13 @@ then
         NoOfDir=$(grep -c "cd+++++++++" /home/pi/rsync_dirnFiles.log)
         NoOfFiles=$(grep -c "f+++++++++" /home/pi/rsync_dirnFiles.log)
         message="DR:$NoOfDir FL:$NoOfFiles"
-        oled r
+        #oled r
         oled +d "$message"
         #rsync -avh --info=progress2 --log-file=/home/pi/rsync_dirnFiles.log --excl$
         sudo oled s
 else
         echo "log File is empty"
 fi
+sleep 1
 done
 #justcom
