@@ -54,8 +54,9 @@ sudo shutdown -c
 # If display support is enabled, notify that the storage device has been mounted
 if [ $DISP = true ]; then
     oled r
-    oled +b "Storage OK"
-    oled +c "Card reader..."
+    oled +b "  Storage OK"
+    oled +c "   Insert"
+    oled +d "card reader..."
     sudo oled s
 fi
 
@@ -110,7 +111,7 @@ if [ $DISP = true ]; then
 fi
 
 #my code start
-if [$STORAGE_AV_SIZE -lt $CARD_DATA_SIZE]
+if [ $STORAGE_AV_SIZE -lt $CARD_DATA_SIZE ]
  then
 #if [$STORAGE_AV_SIZE le $CARD_DATA_SIZE]; then
   echo "Not enough storage available"
