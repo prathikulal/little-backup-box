@@ -8,9 +8,9 @@ source "$CONFIG"
 
 if [ -s /home/pi/rsync_dirnFiles.log ]
 then
-        echo "File is empty"
-else
         echo "File is not empty"
+else
+        echo "File is empty"
 fi
 
 NoOfDir=$(grep -c "cd+++++++++" /home/pi/rsync_dirnFiles.log)
