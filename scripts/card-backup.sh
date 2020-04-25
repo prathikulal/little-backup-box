@@ -110,7 +110,8 @@ if [ $DISP = true ]; then
 fi
 
 #my code start
-if [$STORAGE_AV_SIZE -lt $CARD_DATA_SIZE]; then
+#if [$STORAGE_AV_SIZE -lt $CARD_DATA_SIZE]; then
+if [$STORAGE_AV_SIZE le $CARD_DATA_SIZE]; then
   echo "Not enough storage available"
   oled r
   oled +b "Not enough"
