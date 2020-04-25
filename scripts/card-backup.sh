@@ -30,7 +30,7 @@ if [ $DISP = true ]; then
     oled r
     oled +b "Shutdown active"
     oled +c "Insert storage"
-    sudo oled s 
+    sudo oled s
 fi
 
 # Wait for a USB storage device (e.g., a USB flash drive)
@@ -56,7 +56,7 @@ if [ $DISP = true ]; then
     oled r
     oled +b "Storage OK"
     oled +c "Card reader..."
-    sudo oled s 
+    sudo oled s
 fi
 
 # Wait for a card reader or a camera
@@ -79,7 +79,7 @@ if [ $DISP = true ]; then
     oled r
     oled +b "Card reader OK"
     oled +c "Working..."
-    sudo oled s 
+    sudo oled s
 fi
 
 # Create  a .id random identifier file if doesn't exist
@@ -102,7 +102,7 @@ if [ $DISP = true ]; then
     oled r
     oled +b "Backup complete"
     oled +c "Shutdown"
-    sudo oled s 
+    sudo oled s
 fi
 # Shutdown
 sync
@@ -112,3 +112,4 @@ fi
 #shutdown -h now
 #added this too
 #added this from web interface
+# added this from atoms
