@@ -20,6 +20,6 @@ then
 else
         echo "log File is empty"
 fi
-sleep 1
+#sleep 1
 done
 #justcom
