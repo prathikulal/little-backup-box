@@ -110,7 +110,7 @@ if [ $DISP = true ]; then
 fi
 
 #my code start
-if [$STORAGE_AV_SIZE le $CARD_DATA_SIZE]; then
+if [$STORAGE_AV_SIZE -lt $CARD_DATA_SIZE]; then
   echo "Not enough storage available"
   oled r
   oled +b "Not enough"
@@ -149,7 +149,7 @@ cd
 # Set the backup path
 BACKUP_PATH="$STORAGE_MOUNT_POINT"/"$ID"
 # Perform backup using rsync
-rsync -avh --info=progress2 --log-file=/tmp/rsync_dirnFiles.log --exclude "*.id" "$CARD_MOUNT_POINT"/ "$BACKUP_PATH"
+rsync -avh --info=progress2 --log-file=/tmp/rsync_dirnFiles.log --timeout=60 --exclude "*.id" "$CARD_MOUNT_POINT"/ "$BACKUP_PATH"
 if [ "$?" -eq "0" ]
 then
   echo "rsync was success"
