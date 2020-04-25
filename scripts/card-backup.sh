@@ -159,14 +159,18 @@ if [ "$?" -eq "0" ]
 then
   echo "rsync was success"
   $(cat /dev/null> /home/pi/rsync_dirnFiles.log)
+  sleep 1
+
 else
+  $(cat /dev/null> /home/pi/rsync_dirnFiles.log)
+  sleep 1
   echo "Error while running rsync"
   oled r
   oled +b "Error while copy"
   oled +c "Shutdown"
   sudo oled s
   #clear log file of display
-  $(cat /dev/null> /home/pi/rsync_dirnFiles.log)
+
   #shutdown -h now
   exit
 fi
