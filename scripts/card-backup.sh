@@ -97,6 +97,18 @@ BACKUP_PATH="$STORAGE_MOUNT_POINT"/"$ID"
 # Perform backup using rsync
 rsync -avh --info=progress2 --exclude "*.id" "$CARD_MOUNT_POINT"/ "$BACKUP_PATH"
 
+if [ "$?" -eq "0" ]
+then
+  echo "rsync was success"
+else
+  echo "Error while running rsync"
+  oled r
+  oled +b "Error while copy"
+  oled +c "Shutdown"
+  sudo oled s
+  exit
+fi
+
 # If display support is enabled, notify that the backup is complete
 if [ $DISP = true ]; then
     oled r
