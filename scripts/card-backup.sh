@@ -131,8 +131,8 @@ fi
   oled r
   oled +a "Copying..."
   sourceDnF=$(tree -a "$CARD_MOUNT_POINT"| tail -1|awk '{ print "D:"$1"\tF:"$3}')
-  message="DR:$NoOfDir FL:$NoOfFiles"
-  oled +b "$message"
+  #message="DR:$NoOfDir FL:$NoOfFiles"
+  oled +b "$sourceDnF"
   sudo oled s
 
 #my code ends
