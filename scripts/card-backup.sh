@@ -152,17 +152,21 @@ cd
 
 # Set the backup path
 BACKUP_PATH="$STORAGE_MOUNT_POINT"/"$ID"
+$(touch /home/pi/rsync_dirnFiles.log;cat /dev/null> /home/pi/rsync_dirnFiles.log)
 # Perform backup using rsync
-rsync -avh --info=progress2 --log-file=/tmp/rsync_dirnFiles.log --exclude "*.id" "$CARD_MOUNT_POINT"/ "$BACKUP_PATH"
+rsync -avh --info=progress2 --log-file=/home/pi/rsync_dirnFiles.log --exclude "*.id" "$CARD_MOUNT_POINT"/ "$BACKUP_PATH"
 if [ "$?" -eq "0" ]
 then
   echo "rsync was success"
+  $(cat /dev/null> /home/pi/rsync_dirnFiles.log)
 else
   echo "Error while running rsync"
   oled r
   oled +b "Error while copy"
   oled +c "Shutdown"
   sudo oled s
+  #clear log file of display
+  $(cat /dev/null> /home/pi/rsync_dirnFiles.log)
   #shutdown -h now
   exit
 fi
