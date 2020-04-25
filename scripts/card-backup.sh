@@ -110,4 +110,3 @@ if [ $DISP = true ]; then
     oled r
 fi
 #shutdown -h now
-#added this too
