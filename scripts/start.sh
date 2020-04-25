@@ -27,6 +27,6 @@ done
 
 a="$ip"
 echo "$ip"
-oled r
+#oled r
 #oled +a "$a"
-sudo oled s
+#sudo oled s
