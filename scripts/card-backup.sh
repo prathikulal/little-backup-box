@@ -25,7 +25,7 @@ source "$CONFIG"
 sudo sh -c "echo heartbeat > /sys/class/leds/led0/trigger"
 
 # Shutdown after a specified period of time (in minutes) if no device is connected.
-sudo shutdown -h $SHUTD "Shutdown is activated. To cancel: sudo shutdown -c"
+#sudo shutdown -h $SHUTD "Shutdown is activated. To cancel: sudo shutdown -c"
 if [ $DISP = true ]; then
     oled r
     oled +b "Shutdown active"
