@@ -110,7 +110,8 @@ if [ $DISP = true ]; then
 fi
 
 #my code start
-if [$STORAGE_AV_SIZE -lt $CARD_DATA_SIZE]; then
+if [$STORAGE_AV_SIZE -lt $CARD_DATA_SIZE]
+ then
 #if [$STORAGE_AV_SIZE le $CARD_DATA_SIZE]; then
   echo "Not enough storage available"
   oled r
@@ -130,7 +131,7 @@ fi
   sleep 3
   oled r
   oled +a "Copying..."
-  sourceDnF=$(tree -a "$CARD_MOUNT_POINT"| tail -1|awk '{ print "D:"$1"\tF:"$3}')
+  sourceDnF=$(tree -a "$CARD_MOUNT_POINT"| tail -1|awk '{ print "D:"$1" F:"$3}')
   #message="DR:$NoOfDir FL:$NoOfFiles"
   oled +b "$sourceDnF"
   sudo oled s
