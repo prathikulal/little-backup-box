@@ -131,13 +131,13 @@ fi
   oled +b "Storage available"
   sudo oled s
   sleep 3
-  oled r
-  oled +a "Copying..."
-  sourceDnF=$(tree -a "$CARD_MOUNT_POINT"| tail -1|awk '{ print "D:"$1" F:"$3}')
+#  oled r
+#  oled +a "Copying..."
+#  sourceDnF=$(tree -a "$CARD_MOUNT_POINT"| tail -1|awk '{ print "D:"$1" F:"$3}')
   #message="DR:$NoOfDir FL:$NoOfFiles"
-  oled +c "$sourceDnF"
-  sudo oled s
-  sleep 1
+#  oled +c "$sourceDnF"
+#  sudo oled s
+#  sleep 1
 
 #my code ends
 
