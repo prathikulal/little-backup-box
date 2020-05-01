@@ -163,7 +163,9 @@ rsync -avh --info=progress2 --log-file=/home/pi/rsync_dirnFiles.log --exclude "*
 if [ "$?" -eq "0" ]
 then
   echo "rsync was success"
+  sleep 1
   dataFrmRsync=$(tail -n 1  /home/pi/rsync_dirnFiles.log |awk '{print $12}')
+  echo "transfered size data from log file $dataFrmRsync"
   $(cat /dev/null> /home/pi/rsync_dirnFiles.log)
 
   sleep 1 # added as margin for file read log file script
