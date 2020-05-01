@@ -164,6 +164,8 @@ if [ "$?" -eq "0" ]
 then
   echo "rsync was success"
   sleep 1
+  tmpsd=$(tail -n 1 /home/pi/rsync_dirnFiles.log)
+  echo "last line of log file is $tmpsd"
   dataFrmRsync=$(tail -n 1  /home/pi/rsync_dirnFiles.log |awk '{print $12}')
   echo "transfered size data from log file $dataFrmRsync"
   $(cat /dev/null> /home/pi/rsync_dirnFiles.log)
@@ -188,13 +190,13 @@ else
 fi
 
 # If display support is enabled, notify that the backup is complete
-echo "Storage size before copy $ST_SZ_BEFR_CP"
+#echo "Storage size before copy $ST_SZ_BEFR_CP"
 ST_SZ_AFTR_CP=$(df -k |grep "$STORAGE_MOUNT_POINT"|awk '{print $3}')
-echo "Storage size after copy $ST_SZ_AFTR_CP"
+#echo "Storage size after copy $ST_SZ_AFTR_CP"
 
 if [ $DISP = true ]; then
     SIZE_DIFF=$(echo `expr $ST_SZ_AFTR_CP - $ST_SZ_BEFR_CP`)
-    echo "Storage difference after copy $SIZE_DIFF"
+  #  echo "Storage difference after copy $SIZE_DIFF"
     oled r
     oled +a "Backup complete"
     oled +b "$CARD_DATA_SIZE_HR"
