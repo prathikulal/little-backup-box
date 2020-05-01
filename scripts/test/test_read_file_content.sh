@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-CONFIG_DIR=$(dirname "$0")
-CONFIG="${CONFIG_DIR}/config.cfg"
+#CONFIG_DIR=$(dirname "$0")
+#CONFIG="${CONFIG_DIR}/config.cfg"
+CONFIG="/home/pi/little-backup-box/scripts/config.cfg"
+#/home/pi/little-backup-box/scripts/config.cfg
 source "$CONFIG"
 ######################################################################
 
