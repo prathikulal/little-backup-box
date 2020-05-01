@@ -199,10 +199,13 @@ if [ $DISP = true ]; then
   #  echo "Storage difference after copy $SIZE_DIFF"
     oled r
     oled +a "Backup complete"
-    oled +b "$CARD_DATA_SIZE_HR"
+    message="Card Size:$CARD_DATA_SIZE_HR"
+    oled +b "$message"
     message="S:$SIZE_DIFF"
     oled +c "$message"
-    dataFrmRsync=$(tail -n 7  /home/pi/little-backup-box.log |grep sent|awk '{print $2}')
+    #dataFrmRsync=$(tail -n 7  /home/pi/little-backup-box.log |grep sent|awk '{print $2}')
+    dataFrmRsync=$(tail -n 7  /home/pi/little-backup-box.log |grep "total size"|awk '{print $4}')
+    #tail -n 7  /home/pi/little-backup-box.log |grep "total size"|awk '{print $4}'
     message="Rsync:$dataFrmRsync"
     oled +d "$message"
     #message="T:$dataFrmRsync"
