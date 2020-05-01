@@ -156,18 +156,18 @@ cd
 # Set the backup path
 BACKUP_PATH="$STORAGE_MOUNT_POINT"/"$ID"
 ST_SZ_BEFR_CP=$(df -k |grep "$STORAGE_MOUNT_POINT"|awk '{print $3}')
-dataFrmRsync=0
+#dataFrmRsync=0
 $(touch /home/pi/rsync_dirnFiles.log;cat /dev/null> /home/pi/rsync_dirnFiles.log)
 # Perform backup using rsync
 rsync -avh --info=progress2 --log-file=/home/pi/rsync_dirnFiles.log --exclude "*.id" "$CARD_MOUNT_POINT"/ "$BACKUP_PATH"
 if [ "$?" -eq "0" ]
 then
   echo "rsync was success"
-  sleep 1
-  tmpsd=$(tail -n 1 /home/pi/rsync_dirnFiles.log)
-  echo "last line of log file is $tmpsd"
-  dataFrmRsync=$(tail -n 1  /home/pi/rsync_dirnFiles.log |awk '{print $12}')
-  echo "transfered size data from log file $dataFrmRsync"
+  #sleep 1
+  #tmpsd=$(tail -n 1 /home/pi/rsync_dirnFiles.log)
+  #echo "last line of log file is $tmpsd"
+  #dataFrmRsync=$(tail -n 1  /home/pi/rsync_dirnFiles.log |awk '{print $12}')
+  #echo "transfered size data from log file $dataFrmRsync"
   $(cat /dev/null> /home/pi/rsync_dirnFiles.log)
 
   sleep 1 # added as margin for file read log file script
@@ -202,11 +202,11 @@ if [ $DISP = true ]; then
     oled +b "$CARD_DATA_SIZE_HR"
     message="S:$SIZE_DIFF"
     oled +c "$message"
-  #  dataFrmRsync=$(tail -n 7  /home/pi/little-backup-box.log |grep sent|awk '{print $2}')
-    #message="Rsync:$dataFrmRsync"
-    #oled +d "$message"
-    message="T:$dataFrmRsync"
+    dataFrmRsync=$(tail -n 7  /home/pi/little-backup-box.log |grep sent|awk '{print $2}')
+    message="Rsync:$dataFrmRsync"
     oled +d "$message"
+    #message="T:$dataFrmRsync"
+    #oled +d "$message"
     #messageMC=$SIZE_DIFF 1235658985
     #oled +c "Shutdown"
     sudo oled s
