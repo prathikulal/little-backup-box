@@ -37,7 +37,7 @@ then
           copySpeed=$(tail -n 7 /home/"$USER"/little-backup-box.log |grep %|tail -n 1|awk '{print $4}')
         messageC="Speed: $copySpeed"
           CPUtemp=$(vcgencmd measure_temp|awk '{split($0,a,"=");print a[2]}')
-          CPUload=$(w|head -n 1|awk '{print $8}'|awk '{split($0,a,",");;print a[1]}')
+          CPUload=$(w|head -n 1|awk '{print $9}'|awk '{split($0,a,",");;print a[1]}')
         messageD="$CPUtemp CPU:$CPUload"
         oled r
         oled +a "$messageA"
