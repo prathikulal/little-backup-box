@@ -156,7 +156,7 @@ cd
 # Set the backup path
 BACKUP_PATH="$STORAGE_MOUNT_POINT"/"$ID"
 ST_SZ_BEFR_CP=$(df -k |grep "$STORAGE_MOUNT_POINT"|awk '{print $3}')
-echo "Storage size before copy $ST_SZ_BEFR_CP"
+
 $(touch /home/pi/rsync_dirnFiles.log;cat /dev/null> /home/pi/rsync_dirnFiles.log)
 # Perform backup using rsync
 rsync -avh --info=progress2 --log-file=/home/pi/rsync_dirnFiles.log --exclude "*.id" "$CARD_MOUNT_POINT"/ "$BACKUP_PATH"
@@ -165,8 +165,6 @@ then
   #echo "rsync was success"
   $(cat /dev/null> /home/pi/rsync_dirnFiles.log)
 
-  ST_SZ_AFTR_CP=$(df -k |grep "$STORAGE_MOUNT_POINT"|awk '{print $3}')
-  echo "Storage size after copy $ST_SZ_AFTR_CP"
   sleep 1 # added as margin for file read log file script
 
 else
@@ -184,6 +182,9 @@ else
 fi
 
 # If display support is enabled, notify that the backup is complete
+echo "Storage size before copy $ST_SZ_BEFR_CP"
+ST_SZ_AFTR_CP=$(df -k |grep "$STORAGE_MOUNT_POINT"|awk '{print $3}')
+echo "Storage size after copy $ST_SZ_AFTR_CP"
 
 if [ $DISP = true ]; then
     SIZE_DIFF=$(echo `expr $ST_SZ_AFTR_CP - $ST_SZ_BEFR_CP`)
