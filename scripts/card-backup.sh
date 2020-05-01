@@ -186,7 +186,7 @@ fi
 # If display support is enabled, notify that the backup is complete
 
 if [ $DISP = true ]; then
-    SIZE_DIFF=$(`expr $ST_SZ_AFTR_CP - $ST_SZ_BEFR_CP`)
+    SIZE_DIFF=$(echo `expr $ST_SZ_AFTR_CP - $ST_SZ_BEFR_CP`)
     echo "Storage difference after copy $SIZE_DIFF"
     oled r
     oled +a "Backup complete"
