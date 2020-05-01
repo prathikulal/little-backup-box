@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #CONFIG_DIR=$(dirname "$0")
 #CONFIG="${CONFIG_DIR}/config.cfg"
+#Ver2: Added speed, cipy percentage cpu usage and estimate duration code and tested 
 CONFIG="/home/pi/little-backup-box/scripts/config.cfg"
 source "$CONFIG"
 ######################################################################
@@ -52,4 +53,3 @@ else
 fi
 sleep 1
 done
-#justcomf
