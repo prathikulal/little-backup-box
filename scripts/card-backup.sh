@@ -164,13 +164,10 @@ if [ "$?" -eq "0" ]
 then
   #echo "rsync was success"
   $(cat /dev/null> /home/pi/rsync_dirnFiles.log)
-<<<<<<< HEAD
+
   ST_SZ_AFTR_CP=$(df -k |grep "$STORAGE_MOUNT_POINT"|awk '{print $3}')
   echo "Storage size after copy $ST_SZ_AFTR_CP"
   sleep 1 # added as margin for file read log file script
-=======
-  sleep 1
->>>>>>> parent of 884b26c... Update card-backup.sh
 
 else
   $(cat /dev/null> /home/pi/rsync_dirnFiles.log)
