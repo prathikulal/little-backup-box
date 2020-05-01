@@ -29,16 +29,16 @@ then
 #       589.51M  0:01:19
 #       Speed: 17.11MB/s
 #       53.7'C CPU:0.15
-          $copyPercentage=$(tail -n 7  /home/"$USER"/little-backup-box.log |grep %|tail -n 1|awk '{print $3}')
-        $messageA="Copying... $copyPercentage"
-          $copySize=$(tail -n 7 /home/"$USER"/little-backup-box.log |grep %|tail -n 1|awk '{print $2}')
-          $ElapseTime=$(tail -n 7 /home/"$USER"/little-backup-box.log |grep %|tail -n 1|awk '{print $5}')
-        $messageB="$copySize $ElapseTime"
-          $copySpeed=$(tail -n 7 /home/"$USER"/little-backup-box.log |grep %|tail -n 1|awk '{print $4}')
-        $messageC="Speed: $copySpeed"
-          $CPUtemp=$(vcgencmd measure_temp|awk '{split($0,a,"=");print a[2]}')
-          $CPUload=$(w|head -n 1|awk '{print $8}'|awk '{split($0,a,",");;print a[1]}')
-        $messageD="$CPUtemp CPU:$CPUload"
+          copyPercentage=$(tail -n 7  /home/"$USER"/little-backup-box.log |grep %|tail -n 1|awk '{print $3}')
+        messageA="Copying... $copyPercentage"
+          copySize=$(tail -n 7 /home/"$USER"/little-backup-box.log |grep %|tail -n 1|awk '{print $2}')
+          ElapseTime=$(tail -n 7 /home/"$USER"/little-backup-box.log |grep %|tail -n 1|awk '{print $5}')
+        messageB="$copySize $ElapseTime"
+          copySpeed=$(tail -n 7 /home/"$USER"/little-backup-box.log |grep %|tail -n 1|awk '{print $4}')
+        messageC="Speed: $copySpeed"
+          CPUtemp=$(vcgencmd measure_temp|awk '{split($0,a,"=");print a[2]}')
+          CPUload=$(w|head -n 1|awk '{print $8}'|awk '{split($0,a,",");;print a[1]}')
+        messageD="$CPUtemp CPU:$CPUload"
         oled r
         oled +a "$messageA"
         oled +b "$messageB"
