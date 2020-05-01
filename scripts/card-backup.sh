@@ -203,9 +203,9 @@ if [ $DISP = true ]; then
     oled +b "$message"
     message="S:$SIZE_DIFF"
     oled +c "$message"
-    #dataFrmRsync=$(tail -n 7  /home/pi/little-backup-box.log |grep sent|awk '{print $2}')
-    dataFrmRsync=$(tail -n 7  /home/pi/little-backup-box.log |grep "total size"|awk '{print $4}')
-    #tail -n 7  /home/pi/little-backup-box.log |grep "total size"|awk '{print $4}'
+    dataFrmRsync=$(tail -n 4  /home/pi/little-backup-box.log |grep sent|awk '{print $2}')
+    #dataFrmRsync=$(tail -n 2  /home/pi/little-backup-box.log |grep "total size"|awk '{print $4}')
+    #tail -n 4  /home/pi/little-backup-box.log |grep "total size"|awk '{print $4}'
     message="Rsync:$dataFrmRsync"
     oled +d "$message"
     #message="T:$dataFrmRsync"
