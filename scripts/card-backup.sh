@@ -156,13 +156,14 @@ cd
 # Set the backup path
 BACKUP_PATH="$STORAGE_MOUNT_POINT"/"$ID"
 ST_SZ_BEFR_CP=$(df -k |grep "$STORAGE_MOUNT_POINT"|awk '{print $3}')
-
+dataFrmRsync=0
 $(touch /home/pi/rsync_dirnFiles.log;cat /dev/null> /home/pi/rsync_dirnFiles.log)
 # Perform backup using rsync
 rsync -avh --info=progress2 --log-file=/home/pi/rsync_dirnFiles.log --exclude "*.id" "$CARD_MOUNT_POINT"/ "$BACKUP_PATH"
 if [ "$?" -eq "0" ]
 then
-  #echo "rsync was success"
+  echo "rsync was success"
+  dataFrmRsync=$(tail -n 1  /home/pi/rsync_dirnFiles.log |awk '{print $12}')
   $(cat /dev/null> /home/pi/rsync_dirnFiles.log)
 
   sleep 1 # added as margin for file read log file script
@@ -194,10 +195,13 @@ if [ $DISP = true ]; then
     echo "Storage difference after copy $SIZE_DIFF"
     oled r
     oled +a "Backup complete"
-    oled +b "HDD byte delta:"
-    oled +c "$SIZE_DIFF"
-    dataFrmRsync=$(tail -n 7  /home/pi/little-backup-box.log |grep sent|awk '{print $2}')
-    message="Rsync:$dataFrmRsync"
+    oled +b "$CARD_DATA_SIZE_HR"
+    message="S:$SIZE_DIFF"
+    oled +c "$message"
+  #  dataFrmRsync=$(tail -n 7  /home/pi/little-backup-box.log |grep sent|awk '{print $2}')
+    #message="Rsync:$dataFrmRsync"
+    #oled +d "$message"
+    message="T:$dataFrmRsync"
     oled +d "$message"
     #messageMC=$SIZE_DIFF 1235658985
     #oled +c "Shutdown"
