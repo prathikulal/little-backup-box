@@ -176,8 +176,11 @@ else
   oled +c "Shutdown"
   sudo oled s
   #clear log file of display
-
-  #shutdown -h now
+  sync
+  if [ $DISP = true ]; then
+      oled r
+  fi
+  shutdown -h now
   exit
 fi
 
@@ -205,4 +208,4 @@ sync
 if [ $DISP = true ]; then
     oled r
 fi
-#shutdown -h now
+shutdown -h now
