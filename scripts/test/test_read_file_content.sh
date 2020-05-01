@@ -1,23 +1,23 @@
 #!/usr/bin/env bash
-
-
-CONFIG="/home/pi/little-backup-box/scripts/config.cfg"
+CONFIG_DIR=$(dirname "$0")
+CONFIG="${CONFIG_DIR}/config.cfg"
 source "$CONFIG"
 ######################################################################
 
-while :
-    do
-if [ -s /home/pi/rsync_dirnFiles.log ]
-then
-        echo "File is not empty"
-        NoOfDir=$(grep -c "cd+++++++++" /home/pi/rsync_dirnFiles.log)
-        NoOfFiles=$(grep -c "f+++++++++" /home/pi/rsync_dirnFiles.log)
-        message="DR:$NoOfDir FL:$NoOfFiles"
+          $copyPercentage=$(tail -n 7  /home/"$USER"/little-backup-box.log |grep %|tail -n 1|awk '{print $3}')
+        $messageA="Copying... $copyPercentage"
+          $copySize=$(tail -n 7 /home/"$USER"/little-backup-box.log |grep %|tail -n 1|awk '{print $2}')
+          $ElapseTime=$(tail -n 7 /home/"$USER"/little-backup-box.log |grep %|tail -n 1|awk '{print $5}')
+        $messageB="$copySize $ElapseTime"
+          $copySpeed=$(tail -n 7 /home/"$USER"/little-backup-box.log |grep %|tail -n 1|awk '{print $4}')
+        $messageC="Speed: $copySpeed"
+          $CPUtemp=$(vcgencmd measure_temp|awk '{split($0,a,"=");print a[2]}')
+          $CPUload=$(w|head -n 1|awk '{print $8}'|awk '{split($0,a,",");;print a[1]}')
+        $messageD="$CPUtemp CPU:$CPUload"
         oled r
-        oled +d "$message"
-        #rsync -avh --info=progress2 --log-file=/home/pi/rsync_dirnFiles.log --excl$
+        oled +a "$messageA"
+        oled +b "$messageB"
+        oled +c "$messageC"
+        oled +d "$messageD"
         sudo oled s
-else
-        echo "File is empty"
-fi
-done
+        oled r
