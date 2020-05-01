@@ -18,10 +18,10 @@
 #######################################################################
 # my stabel version
 
-#CONFIG_DIR=$(dirname "$0")
-#CONFIG="${CONFIG_DIR}/config.cfg"
-CONFIG="/home/pi/little-backup-box/scripts/config.cfg"
-source "$CONFIG"
+CONFIG_DIR=$(dirname "$0")
+CONFIG="${CONFIG_DIR}/config.cfg"
+#CONFIG="/home/pi/little-backup-box/scripts/config.cfg"
+#source "$CONFIG"
 
 # Set the ACT LED to heartbeat
 sudo sh -c "echo heartbeat > /sys/class/leds/led0/trigger"
