@@ -20,7 +20,8 @@
 
 CONFIG_DIR=$(dirname "$0")
 CONFIG="${CONFIG_DIR}/config.cfg"
-source "$CONFIG"
+#CONFIG="/home/pi/little-backup-box/scripts/config.cfg"
+#source "$CONFIG"
 
 # Set the ACT LED to heartbeat
 sudo sh -c "echo heartbeat > /sys/class/leds/led0/trigger"
@@ -79,9 +80,9 @@ sudo sh -c "echo 500 > /sys/class/leds/led0/delay_on"
 
 ####my code
 STORAGE_AV_SIZE_HR=$(df -kh |grep "$STORAGE_MOUNT_POINT"|awk '{print $4}') #Available storage size in human readable format
-STORAGE_AV_SIZE=$(df -k |grep "$STORAGE_MOUNT_POINT"|awk '{print $4}') #Available storage size in human readable format
+STORAGE_AV_SIZE=$(df -k |grep "$STORAGE_MOUNT_POINT"|awk '{print $4}') #Available storage size in BYTES
 CARD_DATA_SIZE_HR=$(df -kh |grep "$CARD_MOUNT_POINT"|awk '{print $3}') # Size of data present in card in human readable format
-CARD_DATA_SIZE=$(df -k |grep "$CARD_MOUNT_POINT"|awk '{print $3}') # Size of data present in card in human readable format
+CARD_DATA_SIZE=$(df -k |grep "$CARD_MOUNT_POINT"|awk '{print $3}') # Size of data present in card in BYTES
 #sleep 5
 #####
 
@@ -129,9 +130,10 @@ if [ $STORAGE_AV_SIZE -lt $CARD_DATA_SIZE ]
 fi
   echo "Storage available"
   oled r
-  oled +b "Storage available"
+  oled +b " Storage"
+  oled +c "available"
   sudo oled s
-  sleep 3
+  sleep 2
 #  oled r
 #  oled +a "Copying..."
 #  sourceDnF=$(tree -a "$CARD_MOUNT_POINT"| tail -1|awk '{ print "D:"$1" F:"$3}')
@@ -154,6 +156,7 @@ cd
 
 # Set the backup path
 BACKUP_PATH="$STORAGE_MOUNT_POINT"/"$ID"
+ST_SZ_BEFR_CP=$(df -k |grep "$STORAGE_MOUNT_POINT"|awk '{print $3}')
 $(touch /home/pi/rsync_dirnFiles.log;cat /dev/null> /home/pi/rsync_dirnFiles.log)
 # Perform backup using rsync
 rsync -avh --info=progress2 --log-file=/home/pi/rsync_dirnFiles.log --exclude "*.id" "$CARD_MOUNT_POINT"/ "$BACKUP_PATH"
@@ -161,6 +164,7 @@ if [ "$?" -eq "0" ]
 then
   echo "rsync was success"
   $(cat /dev/null> /home/pi/rsync_dirnFiles.log)
+  ST_SZ_AFTR_CP=$(df -k |grep "$STORAGE_MOUNT_POINT"|awk '{print $3}')
   sleep 1 # added as margin for file read log file script
 
 else
@@ -183,9 +187,16 @@ fi
 # If display support is enabled, notify that the backup is complete
 
 if [ $DISP = true ]; then
+    SIZE_DIFF=$(`expr $ST_SZ_AFTR_CP - $ST_SZ_BEFR_CP`)
     oled r
-    oled +b "Backup complete"
-    oled +c "Shutdown"
+    oled +a "Backup complete"
+    oled +b "HDD byte delta:"
+    oled +c "$SIZE_DIFF"
+    dataFrmRsync=$(tail -n 7  /home/pi/little-backup-box.log |grep sent|awk '{print $2}')
+    message="Rsync:$dataFrmRsync"
+    oled +d "$message"
+    #messageMC=$SIZE_DIFF 1235658985
+    #oled +c "Shutdown"
     sudo oled s
 fi
 # Shutdown
